@@ -1,0 +1,130 @@
+#!/usr/bin/bash
+#
+cat awk_split_file_into_multiple_files_input_file
+#
+echo " "
+# all of the records who 1st field ($1) is Item1 will get written to a file called Item1; ditto for Item2 and for Item3
+# -Fx is the field separator where x is the delimiter which is "," in this example
+awk -F, '{print > $1}' awk_split_file_into_multiple_files_input_file
+#
+cat Item1 ; echo " " ; cat Item2 ; echo " " ; cat Item3
+# almost the same as above except that the filename will be $1.txt
+awk -F, '{print > $1".txt"}' awk_split_file_into_multiple_files_input_file
+echo " "
+ls Item1.txt -ltra ; echo " " ; cat Item1.txt ; echo " "; ls Item2.txt -ltra ; echo " "; cat Item2.txt ; echo " " ; ls Item3.txt -ltra; echo " "; cat Item3.txt
+echo " "
+# Split the files by having only the value of the second field, called $2, in the individual files;
+# however the filenames will still be constructed from the $1 field
+awk -F, '{print $2 > $1".txt"}' awk_split_file_into_multiple_files_input_file 
+ls Item1.txt -ltra ; echo " " ; cat Item1.txt ; echo " "; ls Item2.txt -ltra ; echo " "; cat Item2.txt ; echo " " ; ls Item3.txt -ltra; echo " "; cat Item3.txt
+echo " "
+# Split the files so that all the items whose value is greater than 500 are in the file "500G.txt", and the rest in the  file "500L.txt".
+awk -F, '{if($2<=500)print > "500L.txt";else print > "500G.txt"}' awk_split_file_into_multiple_files_input_file
+ls 500L.txt -ltra
+cat 500L.txt
+echo " "
+ls 500G.txt -ltra
+cat 500G.txt
+echo " "
+# Does the same thing but this time using the ternary operator
+awk -F, '{x=($2<=500)?"500L.txt":"500G.txt"; print > x}' awk_split_file_into_multiple_files_input_file
+ls 500L.txt -ltra
+cat 500L.txt
+echo " "
+ls 500G.txt -ltra
+cat 500G.txt
+echo " "
+# Split the file into multiple files at every occurrence of the pattern START.
+# Do the commands w/i the 1st set of curly braces only if START found; Do the commands w/i the 2nd set of curly braces unilaterally/always
+cat awk_merge_join_input_file
+echo " "
+awk '/START/{x="F"++i".txt";}{print > x;}' awk_merge_join_input_file
+ls F1.txt -ltra
+cat F1.txt
+echo " "
+ls F2.txt -ltra
+cat F2.txt
+echo " "
+ls F3.txt -ltra
+cat F3.txt
+echo " "
+# Split the file into multiple files at every occurrence of the pattern START. But the line containing the pattern should not be in the new files--
+# this is accomplished via the "next" which skips the line that contains the "START" (aka positions the pointer at the next record)
+awk '/START/{x="S"++i".txt";next}{print > x;}' awk_merge_join_input_file
+ls S1.txt -ltra
+cat S1.txt
+echo " "
+ls S2.txt -ltra
+cat S2.txt
+echo " "
+ls S3.txt -ltra
+cat S3.txt
+echo " "
+# do same as previous; but print a different literal instead of START
+awk '/START/{x="S"++i".txt";print "MY STRONG HEADER" > x;next}{print > x;}' awk_merge_join_input_file
+ls  S1.txt -ltra
+cat S1.txt
+echo " "
+ls  S2.txt -ltra
+cat S2.txt
+echo " "
+ls  S3.txt -ltra
+cat S3.txt
+echo " "
+# Split the file into multiple files at every 3rd line . i.e, First 3 lines into X1, next 3 lines into X2 and so on.
+# NR is the line number of the current record. NR%3 will be equal to 1 for every 3rd line (the % is the modulo operator)
+# == is the "equal" operator
+awk 'NR%3==1{x="X"++i;}{print > x}' awk_merge_join_input_file
+ls  X1 -ltra
+cat X1
+echo " "
+ls  X2 -ltra
+cat X2
+echo " "
+ls  X3 -ltra
+cat X3
+echo " "
+ls  X4 -ltra
+cat X4
+echo " "
+cat awk_merge_join_input_file_header_trailer
+echo " "
+# Using sed, delete the first record (1d) and the last record ($d)--the "d" is the delete action and the 1 and the $ are the 1st and last record, resp.; 
+# Then pass that result to the awk command which does the same as the previous awk command
+sed '1d;$d;' awk_merge_join_input_file_header_trailer | awk 'NR%3==1{x="XX"++i;}{print > x}'
+ls  XX1 -ltra
+cat XX1
+echo " "
+ls  XX2 -ltra
+cat XX2
+echo " "
+ls  XX3 -ltra
+cat XX3
+echo " "
+ls  XX4 -ltra
+cat XX4
+echo " "
+# Split the file at every 3rd line, retaining the header and trailer in every file.
+# Before the file is processed, the first line is read using getline into the variable f.
+# NR%3 is checked with 2 instead of 1 as in the earlier case because since the first line is a header which we need to keep/print, 
+# we need to split the files at 2nd, 5th, 8th lines, and so on. 
+# All the file names are stored in the array "a" for later processing.
+# Without the END label/logic, all the files will have the header record, but only the last file will have the trailer record--
+# not what we want--rather, we want all of the files to have the trailer record ! 
+# So, the END label/logic is to precisely write the trailer record to all the files other than the last file.
+# Syntax of the print: If nothing is before the ">" redirect, then the currently read line is "appended" to the filename that's contained within the "x" variable; 
+# Otherwise, the contents of the variable (in this case, the "f" variable) contains the header record, so then the header record is "appended" to the filename that's contained within the "x" variable--actually, the header records is always written as the 1st record because when NR%3 is = to 2, we are always at a filename break (a new filename) 
+#
+awk 'BEGIN{getline f;}NR%3==2{x="XXX"++i;a[i]=x;print f>x;}{print > x}END{for(j=1;j<i;j++)print> a[j];}' awk_merge_join_input_file_header_trailer
+ls  XXX1 -ltra
+cat XXX1
+echo " "
+ls  XXX2 -ltra
+cat XXX2
+echo " "
+ls  XXX3 -ltra
+cat XXX3
+echo " "
+ls  XXX4 -ltra
+cat XXX4
+echo " "

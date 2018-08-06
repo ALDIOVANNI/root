@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+# Demonstrate reading a file line-by-line, using I/O redirection in a compound command
+# Input File is this SS's input parm
+ 
+line="does not matter"
+prev=
+ 
+if [ -z "$1" ]; then
+   echo "Usage: $0 filename"
+else
+#
+# Due to the redirection, "read" is not reading from STDIN (the default),
+# but rather, "read" is reading from $1;
+# this is performed via < $1 redirecting the $1 into the "while read"
+#
+   cat $1
+   echo " "
+   echo " "
+   if [ -r $1 ]; then
+      while read line; do
+         echo "$line"
+         prev=$line
+      done < $1
+   fi
+fi
+echo "End value of \$line is $line"
+echo "End value of \$prev is $prev"

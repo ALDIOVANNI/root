@@ -1,0 +1,6 @@
+#!/bin/sh
+Current_time=`date +%H%M`
+echo $Current_time
+who -u | awk $Current_time - $4 <= 5 { print }
+last -5|grep -i "logged in"|wc -l
+last -5|grep -v "logged out"|wc -l

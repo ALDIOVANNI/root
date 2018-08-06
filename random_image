@@ -1,0 +1,20 @@
+#!/bin/ksh
+
+# Select a random image from the background logo collection
+# This could be used to configure a screen saver, for example.
+#
+# This works even if the filenames contain spaces.
+
+# switch to the logos directory to avoid long paths
+logos=/usr/X11R5/lib/X11/app-defaults
+cd $logos
+
+# '*' is a filename wildcard to match all files in the current directory
+set *
+
+# Use the syntax for arithmetic expressions.  "%" is the modulo operator
+# Shift arguments by a random number between 0 and the number of files
+shift $(($RANDOM % $#))
+
+# Output the resulting first argument
+echo "$logos/$1"

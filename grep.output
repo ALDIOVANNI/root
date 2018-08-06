@@ -1,0 +1,5 @@
+fruitlist="Apple Pear Tomato Peach Grape"
+for fruit in $fruitlist
+	if [ "$fruit" = "Tomato" ] || [ "$fruit" = "Peach" ]
+echo "I like ${fruit}es"
+echo "I like ${fruit}s"

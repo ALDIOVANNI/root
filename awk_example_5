@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+
+string="\n"  # setup for the subsequent printf comand
+x=;export x;echo $x
+
+cat awk_item_and_prices_input_file
+
+# printf "%b\n" "$string" # this is reliable newline coding; the echo "\n" coding does not always work
+#                         # also: the echo does not do newline the very 1st time, so you need echo "\n" or printf
+echo "\n"
+
+# -F"," means delimited by comma and the lack of this means use the default delimiter which is a space
+# x+=$2 means x=x+$2
+
+awk -F"," '{x+=$2}END{print x}' awk_item_and_prices_input_file  # To find the total of all numbers in second column. 
+								# i.e, to find the sum of all the prices
+echo
+
+# do same but not against a CSV file (so delete the -F",")
+
+cat awk_item_and_prices_no_comma_input_file
+echo "\n"
+
+awk '{x+=$2}END{print x}' awk_item_and_prices_no_comma_input_file  # To find the total of all numbers in second column. 
+								   # i.e, to find the sum of all the prices
+echo
+
+awk '$1=="Item1"{x+=$2;}END{print x}' awk_item_and_prices_no_comma_input_file # To find the total sum of all numbers in second column; 
+									      # scope is the "item1" group entries
+echo
+
+VAR="Item1"
+awk -v inp=$VAR '$1==inp{x+=$2;}END{print x}' awk_item_and_prices_no_comma_input_file # -v is used to pass the shell variable called $VAR to awk 
+
+awk '{a[$1];}END{for (i in a)print i;}' awk_item_and_prices_no_comma_input_file # To find unique values of the first column
+echo
+
+awk '{a[$1]+=$2;}END{for(i in a)print i", "a[i];}' awk_item_and_prices_no_comma_input_file # To find the sum of individual group records 
+											   # i.e, to sum all records pertaining to Item1 alone, 
+											   # Item2 alone, and so on
+echo
+
+awk '{x+=$2;print}END{print "Total "x}' awk_item_and_prices_no_comma_input_file # To find the sum of all entries in second column and 
+										# add it as the last record
+echo
+
+# to print the maximum or the biggest record of every group:
+awk '{if (a[$1] < $2)a[$1]=$2;}END{for(i in a){print i,a[i];}}' awk_item_and_prices_no_comma_input_file
+
+echo 
+
+awk '{a[$1]+=$2;x+=$2;}END{for(i in a)print i", "a[i];print "Total, "x;}' awk_item_and_prices_no_comma_input_file # (1) To find the sum of 
+													# individual group records. i.e, 
+													# to sum all records pertaining to
+													# Item1 alone, Item2 alone, and so on; 
+													# (2) To find the sum of all entries in
+													# second column and 
+													# add it as the last record
+echo
+
+awk '{a[$1]++;x+=1;}END{for (i in a)print i, a[i];print "Total "x;}' awk_item_and_prices_no_comma_input_file # To find the count of 
+													     # entries against every group; 
+													     # and the total count across 
+													     # all of the groups
+echo
+
+#
+# to join or concatenate the values of all group items: Join the values of the second column with a colon separator:
+# If there is some value in a[$1], then append or concatenate the current value using a colon delimiter, 
+# else just assign it to a[$1] since this is the first value.
+# To make the above if block clear: "if (a[$1])" means "if a[$1] has some value".
+#
+awk '{if(a[$1])a[$1]=a[$1]":"$2; else a[$1]=$2;}END{for (i in a)print i, a[i];}' OFS=, awk_item_and_prices_no_comma_input_file
+
+echo
+
+# Concatenate variables in awk:
+# One more thing to notice is the way string concatenation is done in awk. 
+# To concatenate 2 variables in awk, use a space in-between.
+# Examples:
+
+# z=x y    to concatenate x and y
+# z=x":"y  to concatenate x and y with a colon separator.

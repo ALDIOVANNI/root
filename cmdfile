@@ -1,0 +1,4 @@
+s/Unix/UNIX(Tm)/g
+/AIX/d
+$a\
+The End

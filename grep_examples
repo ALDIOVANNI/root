@@ -1,0 +1,54 @@
+#!/bin/ksh
+
+export GREP_OPTIONS='--color=auto' GREP_COLOR='100;8'  # highlight the hits
+						       # this feature ties to --color=auto on the GREP which does not work
+						       # in general: this coloring feature does not work
+
+string="\n"  # setup for the subsequent printf comand
+
+cat grep_input_file
+
+# printf "%b\n" "$string" # this is reliable newline coding; the echo "\n" coding does not always work
+#                         # also: the echo does not do newline the very 1st time, so you need echo "\n" or printf
+echo "\n"
+
+grep "boo" grep_input_file # alternative: cat grep_input_file | "boo"
+echo
+grep "boo" grep_input_file | grep -vi booze # -v means to exclude all lines that match on "booze" 
+echo
+
+# This option does not work
+# grep --context=2 "booze" grep_input_file # displays +- 2 lines around the string booze  
+# echo
+# grep -C 2 "booze" grep_input_file        # ditto 
+
+grep -n "boo" grep_input_file # -n --> includes line# where your search-string was found
+echo
+grep -vn "boo" grep_input_file # -vn --> includes line# where your search-string was NOT found
+echo
+grep -c "boo" grep_input_file # -c --> give me total hit knt
+echo
+grep -l "boo" * # prints only the filenames of files in the query that have lines that match the search string 
+echo
+grep -i "BOO" grep_input_file # -i --> ignore case
+echo
+# -x option DOES NOT WORK
+grep -x "boo" grep_input_file # -x --> only prints when search string matches the entire line EXACTLY
+echo
+grep -x "boot" grep_input_file # -x --> only prints when search string matches the entire line EXACTLY 
+echo
+echo "boot" > search
+grep -f search grep_input_file # -f --> search criteria is in the file called "search"
+echo
+grep "e$" grep_input_file   # e$ is supposed to list all lines that end in "e", but it does not work
+echo
+grep -iw "boot" grep_input_file  # -w --> look for the WORD boot (ignore case), not the string boot
+echo
+grep "world$" grep_input_file # world$ lists all lines whose last word is world
+echo
+grep "^hello" grep_input_file # ^hello lists all lines whose first word is hello
+echo
+grep "^hello.*world$" grep_input_file # lists all lines that start with hello and that end with world
+echo
+# following grep example does not work:
+grep "^fucked$" grep_input_file # lists all lines that contain word ??? between the beginning and the end of the line

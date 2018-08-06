@@ -1,0 +1,3 @@
+#!/bin/sh
+cat empl
+cut -f1 empl | paste -s -

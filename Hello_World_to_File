@@ -1,0 +1,13 @@
+#!/bin/sh
+msg1="one"
+msg2="$msg1 two"
+msg3="$msg2 three"
+echo $msg3
+
+echo 'msg="Hello World!"' > hello
+echo 'echo $msg' >> hello  # append this command to the hello file
+
+chmod 700 hello # make file hello executable
+chmod +x hello  # make file hello executable
+
+./hello         # execute hello file

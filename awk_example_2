@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+string="\n"  # setup for the subsequent printf comand
+#
+cat awk_passing_args_input_file
+#
+# printf "%b\n" "$string" # this is reliable newline coding; the echo "\n" coding does not always work
+#                         # also: the echo does not do newline the very 1st time, so you need echo "\n" or printf
+echo " "
+echo " "
+#
+x=3;export x;echo $x
+echo " "
+#
+awk -v val=$x '{print $1+val}' awk_passing_args_input_file # adding 3 to 1st numeric column
+echo " "
+#
+awk  '{print $1+val}' val=$x awk_passing_args_input_file # ditto
+echo " "
+#
+awk  '{print $1+ENVIRON["x"]}' awk_passing_args_input_file # ditto
+echo " "
+#
+awk '{print q $1 s $2 q}' q='"' s=' ' awk_input_for_quoting # unstring delimited by space, surround by double-quote; does not display closing double-quote
+echo " "

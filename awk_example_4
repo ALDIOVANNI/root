@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# the key to getting these awk commands to work is  that you must convert dos file to unix file via dos2unix command or the equivalent command:
+#     tr -d '\r' < awk_merge_join_input_file  > awk_merge_join_input_file_new
+#
+# string="\n"  # setup for the subsequent printf comand
+#
+cat awk_merge_join_input_file
+#
+# printf "%b\n" "$string" # this is reliable newline coding; the echo "\n" coding does not always work
+#                         # also: the echo does not do newline the very 1st time, so you need echo "\n" or printf
+# note: echo "\n" does not work in linux
+echo " "
+#
+# Join the lines following the pattern START without any delimiter:
+# Prints a blank line if the line is not the first line (NR!=1).
+# "next" is used to skip the line that contains the "START" string.
+# The second set of braces {} works only for the lines not containing the START;
+# This section simply prints the current line without a terminating new line character (printf $0).
+# Hence, as a result, we get all the lines after the pattern START in the same line.
+# The END label is used to print a newline at the end without which the prompt will appear at the end of the last line of output itself
+# 
+awk '/START/{if (NR!=1)print "";next}{printf $0}END{print "";}' awk_merge_join_input_file
+echo  " "
+#
+# Join the lines following the pattern START with space as delimiter;
+# 
+awk '/START/{if (NR!=1)print "";next}{printf "%s ",$0}END{print "";}' awk_merge_join_input_file
+echo  " "
+#
+# Join the lines following the pattern START with comma as delimiter;
+# What x=(!x)?$0:x","$0 means:
+# It means if x is empty ( x=(!x) ), assign the current line(which is $0) to x ($0); else append a comma and the current line to x ( x","$0 )
+# 
+x=;export x
+awk '/START/{if (x)print x;x="";next}{x=(!x)?$0:x","$0;}END{print x;}' awk_merge_join_input_file
+echo  " "
+#
+# Join the lines following the pattern START with comma as delimiter with also the line that contains the "START";
+# in other words, do not skip the line that contains the "START" (indicated by lack of "next")
+# 
+awk '/START/{if (x)print x;x="";}{x=(!x)?$0:x","$0;}END{print x;}' awk_merge_join_input_file
+#
+# Join the lines following the pattern START with comma as delimiter with also the pattern matching line. However, the pattern line should not be joined
+#
+awk '/START/{if (x)print x;print;x="";next}{x=(!x)?$0:x","$0;}END{print x;}' awk_merge_join_input_file
+#

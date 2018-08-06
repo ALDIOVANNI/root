@@ -1,0 +1,25 @@
+
+#!/bin/ksh
+echo $$ $PPID  # PID / Parent Process ID
+# if we had 3 parms, then shift moves $2 to $1 and then $3 to $1
+# $# is the count of positional parms coming into the script
+echo "# of input positional parms =" $#
+#echo $1 
+#shift
+#echo $1
+#shift
+#echo $1
+fruitlist="Apple Pear Tomato Peach Grape"
+for fruit in $fruitlist
+do
+	if [ "$fruit" = "Tomato" ] || [ "$fruit" = "Peach" ]
+	then
+		echo "I like ${fruit}es"
+	else
+		echo "I like ${fruit}s"
+	fi
+done
+
+echo $? # was last command OK ?
+
+echo $LINENO

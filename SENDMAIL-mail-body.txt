@@ -1,0 +1,5 @@
+to : adiovanni@earthlink.net
+from : root@localhost
+subject : Test EMAIL from SENDMAIL
+
+Test EMAIL from SENDMAIL

@@ -1,0 +1,59 @@
+ # 1st-time only - S -
+
+copy the UNIX_Learning folder from Gateway location to the home/documents location
+
+cd Doc*
+chmod 777 U*
+cd U*
+chmod 777 *
+
+# Note: As discovered, within my location, there's no need to set the CHMOD of the folder / files to 777
+
+# $HOME = /home/liveuser
+
+PATH=$PATH:$HOME/Documents/UNIX\ Learning;export PATH 
+
+# code "echo $PATH" - do no code "cat $PATH" or just "$PATH'; rather check via "echo $PATH" only
+
+cd $HOME/Doc*/U*
+
+# 1st-time-only - E -
+
+# hash <<your-shell-script>> re-builds list...this does not work - still you'll get error on line # 1 where we provide the shell's location
+
+# chmod +x <<your-shell-script>> makes your shell-script executable...this does not work - still you'll get error on line # 1 where we provide the shell's location
+
+#chmod 700 <<your-shell-script>> also makes your shell-script executable, but again this does not work
+
+# to execute your shell-script you would do the following: ./<<your-shell-script>>
+
+# the solution is as follows:
+
+# bash <<your shell-script>>
+
+# Notes / Observations:
+
+# 1. Have discovered that the document contents are destroyed upon a restart. I thought the following would make my files/documents permanent but it did not work because Fedora deletes whatever you added and restores the original Fedora image upon restart! So even though the thumb is NOT read-only/protected the Fedora Image is. Following commands are not required:
+
+# (a) Copy your directory UNIX\ Learning from your "Gateway" to /home/liveuser/Documents and chmod 777 everything
+
+# (b) mkdir UNIX\ Learning under /home/liveuser/bin
+
+# (c) cp /home/liveuser/Documents/UNIX\ Learning/* /home/liveuser/bin/UNIX\ Learning
+
+# (d) chmod 777 *
+
+# (e) repeat for /usr/bin/UNIX\ Learning
+
+# 2. Also when I attempt to add my Gateway location to the PATH (see below), it does not get added to the $PATH:
+
+/run/media/liveuser/Gateway/Documents\ and\ Settings/adiovanni/Documents/UNIX\ Learning
+
+# 3. It also looks like my updates to /home/liveuser/.bash_profile (the script that we can change so that our location will get added to the $PATH) is not even being run upon exit and re-entry into terminal/Fedora even though I modified it to add my Gateway location; think this is because Fedora is undoing my changes and restoring the original Fedora image.
+
+# 4. Bottom Line: I am getting "No such file or directory" and "for reading (No such file or directory)ile" errors on certain commands within the Shell Script. The problem: That Shell Script is corrupted and has garbage bytes at the end of one or more of the lines. The solution: Create a new SS, copy paste from the old SS to the new SS and save; and delete the old SS and rename the new SS name to the old SS name (can also do a REPLACE in place). Then re-execute the SS to see that the errors now go away. 
+
+# 5. DOS files will have to be converted to UNIX files via dos2unix command
+However, you must install dos2unix command on linux but you must have /root access to do that (note there is a Windows dos2unix command but it's too messy to keep toggling between LINUX to Windows). Here is a dos2unix command workaround (and the input filename is awk_merge_join_input_file in our example) to remove the <CR> characters which is the \r escape sequence:
+
+tr -d '\r' < awk_merge_join_input_file  > awk_merge_join_input_file_new

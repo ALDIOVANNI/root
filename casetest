@@ -1,0 +1,20 @@
+#!/bin/ksh
+case $USERNAME in
+D*) echo "starts with D" ;;
+*)  echo "doesn't start with D" ;;
+esac
+
+echo $USERNAME "contains" ${#USERNAME} "chars"
+
+if [[ $USERNAME = D* ]] ; then 
+	echo "Horay !"
+else
+	echo "Shit !"
+fi 
+
+# if [ "${USERNAME:0:1}" = "D" ]  only works in a very old KSH
+
+
+echo "Error: program failed" >&2  # send error message to stderr
+
+

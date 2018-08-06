@@ -1,0 +1,11 @@
+Only MAILX works (SENDMAIL and EXIM4 do not work); go to .mailrc for the settings; -v means verbose 
+
+mailx -v -s "my subject" -r "root@localhost.com" adiovanni@earthlink.net
+
+how to send an attachment as well:
+
+mailx -v -s "my subject" -r "root@localhost.com" -a "/root/mailx_save_command.txt" adiovanni@earthlink.net
+
+then type body
+
+then cntl-D to send the email

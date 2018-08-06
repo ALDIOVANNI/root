@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Check positional argument handling
+echo "Number of arguments: $#"
+echo "\$0 = $0"
+
+echo "Loop over \$*"
+for a in $*; do
+   echo \"$a\"
+done
+
+echo "Loop over \"\$@\""
+for a in "$@"; do
+   echo \"$a\"
+done

@@ -1,0 +1,55 @@
+From root@DAVID-PC Mon Sep 19 03:15:40 2016
+X-Mailer: mail (GNU Mailutils 2.99.98)
+Subject: testing unix mail command
+Cc: testing unix mail command
+To: adiovanni@earthlink.net
+
+
+testing
+
+Date: Sun, 09 Oct 2016 17:32:36 -0400
+From: root@DAVID-PC
+To: ?
+Subject: from linux
+Message-ID: <57fab774.uY3+OaWw0YM09cGw%root@DAVID-PC>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+test message from linux
+Date: Sun, 09 Oct 2016 17:34:32 -0400
+From: root@DAVID-PC
+To: adiovanni@earthlink.net
+Subject: Test email from LINUX
+Message-ID: <57fab7e8.N6NmpvL038BKyint%root@DAVID-PC>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+Test Message Body from LINUX
+Date: Sun, 09 Oct 2016 19:00:05 -0400
+From: root@localhost.com
+To: -a, adiovanni@earthlink.net
+Subject: an attachment
+Message-ID: <57facbf5.u85vhdXrZSvA4Oh1%root@localhost.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+
+testing sending an attachment
+on the mailx command
+Date: Sun, 09 Oct 2016 19:02:20 -0400
+From: root@localhost.com
+To: -a, adiovanni@earthlink.net
+Subject: an attachment
+Message-ID: <57facc7c.prZIKrOLRjVK0Xhc%root@localhost.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+testing sending an attachment

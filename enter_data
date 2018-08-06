@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "Testing interactive user input: enter some keystrokes and press return"
+read x more
+echo "First word was \"$x\""
+echo "Rest of the line (if any) was \"$more\""

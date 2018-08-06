@@ -1,0 +1,2 @@
+# 2016-09-15AGD: add date/time to the prompt (within /etc/profile.d does not work, must be invoked as . change_prompt.sh )
+PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}[\d \t] \u@\h:[\w]\\$ '

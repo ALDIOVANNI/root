@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+# Shell idioms: multiple ways to accomplish common tasks
+# String to be tested is the input variable
+
+# Test the first character in a string for a slash (/) - Here are 3 ways to do it 
+
+if [ -z "$1" ]; then
+   echo "Usage: $0 string"
+   exit
+fi
+
+var=$1
+echo "var=\"$var\""
+
+# Use 'cut' - works everywhere, but uses an an extra process for a trivial job.
+echo
+echo "Using 'cut'"
+if [ "`echo $var | cut -c1`" = "/" ] ; then
+   echo "starts with /"
+else
+   echo "doesn't start with /"
+fi
+
+# Use 'case' with a pattern.  Works everywhere.
+# the * is the wildcard 
+echo
+echo "Using 'case'"
+case $var in
+/*) echo "starts with /" ;;
+*)  echo "doesn't start with /" ;;
+esac

@@ -1,0 +1,8 @@
+#!/bin/ksh
+cp empFile_backup empFile
+# -i means to edit the file in-place (but this feature is only supported in GNU/UNIX and not POSIX)
+cat empFile
+sed -i '1i Employee, EmpId' empFile 
+sed -i '1a ---------------'  empFile
+sed -i '$a ---------------' empFile
+cat empFile

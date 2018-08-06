@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+# l = split is done at the completion of the line
+# x/4 means to write to STDOUT the 1st of 4 sections (and not to a file)
+cat file_UNIX_split
+echo " "
+echo " "
+echo "Section 1 of 4..."
+echo " "
+split -n l/1/4 file_UNIX_split
+echo " "
+echo "Section 2 of 4..."
+echo " "
+split -n l/2/4 file_UNIX_split
+echo " "
+echo "Section 3 of 4..."
+echo " "
+split -n l/3/4 file_UNIX_split
+echo " "
+echo "Section 4 of 4..."
+echo " "
+split -n l/4/4 file_UNIX_split
+echo " "

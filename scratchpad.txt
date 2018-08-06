@@ -1,0 +1,20 @@
+SHELL=/bin/bash
+MAILTO=adiovanni@earthlink.net
+59 22 * * * /root/crontab_test.sh
+
+/etc/rc6.d/postfix restart
+
+echo "body is testing UNIX MAILX command" | mailx -v \
+> -r "adiovanni@earthlink.net" \
+> -s "subject is testing UNIX MAILX command" \
+> -S smtp="smtpauth.earthlink.net\:587" \
+> -S smtp-use-starttls \
+> -S smtp-auth=login \
+> -S smtp-auth-user="adiovanni@earthlink.net" \
+> -S smtp-auth-password="ibmone05" \
+> -S ssl-verify=ignore \
+> -S pop3-use-apop="pop.earthlink.net\:110" \
+> -S pop3-use-apop-user="adiovanni@earthlink.net" \
+> -S pop3-use-starttls \
+> -S pop3-use-starttls-user="adiovanni@earthlink.net" \
+> adiovanni@earthlink.net

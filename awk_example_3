@@ -1,0 +1,56 @@
+#!/usr/bin/bash
+
+string="\n"  # setup for the subsequent printf comand
+
+cat awk_csv_input
+
+# printf "%b\n" "$string" # this is reliable newline coding; the echo "\n" coding does not always work
+#                         # also: the echo does not do newline the very 1st time, so you need echo "\n" or printf
+echo "\n"
+
+awk '$0 ~ /Rent/{print}' awk_csv_input # print all lines that contain rent; ~ is the symbol used for "pattern matching"
+echo
+
+awk '/Rent/' awk_csv_input # shortcut method, yields the same output, because the $0 ~and the {print} are the defaults !
+echo
+
+awk -F, '$1 ~ /Rent/' awk_csv_input	# The task is to only list lines that have rent in column # 1
+					# -F means delimiter and "," is the delimiter; $1 means the first column
+echo
+
+awk -F, '$1=="Rent"' awk_csv_input	# almost the same but with a twist: match exactly for the word "rent" in the first column 
+					# using the "==";
+					# so, "rents" will be excluded !
+echo
+
+awk -F, '$1 == "Medicine"{print $2}' awk_csv_input # To print only the 2nd column for all "Medicine" records
+echo
+
+awk '/Rent|Medicine/' awk_csv_input	# To match for patterns "Rent" or "Medicine" in the file
+					# the | means "OR"
+echo
+
+awk -F, '$1 ~ /Rent|Medicine/' awk_csv_input # To match for patterns "Rent" or "Medicine" in the file but ONLY in the first column
+echo
+
+awk -F, '$1 ~ /^Rent$|^Medicine$/' awk_csv_input	# to exactly match only for Rent or Medicine in the first column 
+							# because "^" indicates beginning the of the line;
+							# (aside: "$" indicates the end of the line)
+echo
+
+awk '!/Medicine/' awk_csv_input # print the lines that do not contain the pattern Medicine because the "!" is used to negate the pattern search.
+echo
+
+awk -F, '$1 !~ /Medicine/' awk_csv_input # To negate the pattern only on the first column alone 
+
+awk -F, '$2>500' awk_csv_input	# print all records whose amount (which is the second column, indicated by $2) is greater than 500
+echo
+
+awk 'NR==1 && /Medicine/' awk_csv_input # To print the first record only if it contains the string Medicine; 
+					# the "&&" means "AND";
+					# NR==1 means "the first record"
+echo
+
+awk -F, '/Medicine/ || $2>600' awk_csv_input	# To print all the Medicine records and also those records whose amount 
+						# (the second column which is denoted by $2) is greater than 600
+echo

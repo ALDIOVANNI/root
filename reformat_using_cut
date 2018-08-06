@@ -1,0 +1,30 @@
+#!/bin/sh
+del tmp1
+del tmp2
+del tmp3
+cat empl
+echo
+cat emplte1
+echo
+cut -f 2,3 empl > tmp1
+# echo $? # this is the unix command's return code or exit status
+
+cut -f 2 emplte1 > tmp2      # get line too long error message: solution: add an extra blank line @ bottom of input file
+# cut -c 4-8 emplte1 > tmp2  # get a column of spaces on the new file
+
+echo
+cat tmp1
+echo
+cat tmp2
+echo
+paste tmp1 tmp2
+echo
+
+# Following code replaces the book's method because the book's method dropped emplte1's 2nd column
+
+cut -f 1-2 emplte1 > tmp3 
+paste tmp1 tmp3 > phonebook
+cat phonebook
+
+# cut -f 2-3 empl | paste emplte1 - > phonebook
+# cat phonebook

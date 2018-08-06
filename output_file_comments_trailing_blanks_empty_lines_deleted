@@ -1,0 +1,5 @@
+cat 	input_file_for_adding_char_@_pos_81
+set -x
+sed 's/./&:/80' <input_file_for_adding_char_@_pos_81 >output_file_for_adding_char_@_pos_81
+set +x
+cat 	output_file_for_adding_char_@_pos_81

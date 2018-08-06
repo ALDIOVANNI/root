@@ -1,0 +1,6 @@
+set smtp="smtpauth.earthlink.net:587"
+set smtp-use-starttls 
+set smtp-auth=login 
+set smtp-auth-user=adiovanni@earthlink.net 
+set smtp-auth-password=ibmone05
+set ssl-verify=ignore

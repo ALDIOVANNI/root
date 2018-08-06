@@ -1,0 +1,16 @@
+#!/bin/ksh
+
+echo Today is `date`
+
+file=/etc/hosts
+echo The file $file has $(wc -l < $file) lines
+
+hostname -s > myhostname
+echo This system has host name $(<myhostname)
+
+pwent=`grep '^richard:' /etc/passwd`
+if [ -z "$pwent" ]; then
+   echo richard not found
+else
+   echo richard found
+fi

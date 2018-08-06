@@ -1,0 +1,4 @@
+MY STRONG HEADER
+Solaris
+Aix
+SCO
